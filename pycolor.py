@@ -1,9 +1,12 @@
-import os  
+import importlib
+import colors
 from colors import *
-
 i=0
-colours=list(colList.values())
-names=list(colList.keys())
+theme_key = input("Enter theme name (rosepinemoon or catpuccinmathiatto): ")
+theme_module = importlib.import_module('colors')
+theme = getattr(theme_module, theme_key)
+colours=list(theme.values())
+names=list(theme.keys())
 with open("coloursgtk.css", "w") as f:
 	while i<= len(colours)-1:
 		print("@define-color ", names[i]," #", colours[i],";", file=f, sep ='')
