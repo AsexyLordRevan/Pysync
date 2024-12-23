@@ -1,4 +1,11 @@
 # Byte-compiled / optimized / DLL files
+
+colours.conf
+colours.css
+colours.rasi
+coloursgtk.css
+sync.sh
+
 __pycache__/
 *.py[cod]
 *$py.class
