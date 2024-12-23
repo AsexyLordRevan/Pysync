@@ -3,15 +3,25 @@ from theme import *
 from pycolor import *
 exec(open("pycolor.py").read())
 i=0
-with open("../../.sync.sh", "w") as f:
-    print('#!/bin/bash\ncd ~/.config/colours\npython pycolor.py\ncd ~/', file=f, sep='')
-    while i<= len(software)-1:
-        cur=software[i]
-        print("ln -sf ", "~/.config/colours/",cur["format"]," ",cur["location"],sep='',file=f)
-        i=i+1
-    print('echo "Colours synched"\n',file=f)
-    i=0
-    while i<= len(commands)-1:
-        print(commands[i],file=f)
-        i=i+1
-    print('\necho "Software reloaded"\ncd ~/', file=f,sep='')
+
+TEMPLATE = """#!/bin/bash
+cd ~/.config/colours
+python pycolor.py
+cd ~/
+{links}
+echo "Colours synched"
+{commands}
+echo "Software reloaded"
+cd ~/
+"""
+
+links = ""
+while i <= len(software) - 1:
+    cur = software[i]
+    links += "ln -sf ~/.config/colours/{format} {location}\n".format(format=cur["format"], location=cur["location"])
+    i += 1
+
+commands_str = "\n".join(commands)
+
+with open("sync2.sh", "w") as f:
+    f.write(TEMPLATE.format(links=links, commands=commands_str))
