@@ -17,6 +17,6 @@ Pieces of software are stored as dictionaries, under the format
 
 `{name, location, format}`.
 
-`name` is primarily for readability and serves no actual purpose. `location` is the destination file for symlinked files, or the file to be used for search and replace. `format` is the file format, and can be `colours.css`, `coloursgtk.css`, `colours.rasi` and `colours.conf`. The format `search&replace` marks it for search and replacing.
+`name` is primarily for readability and serves no actual purpose. `location` is the destination file for symlinked files, or the file to be used for search and replace. `format` is the file format, and can be `colours.css`, `coloursgtk.css`, `colours.rasi` and `colours.conf`. The format `search&replace` marks it for search and replacing. In this case, the format must be given with the absolute bath under the format `/home/USER/example/example.txt`
 
 Just add the relevant information for each piece of software. The default configuration supports Waybar, Hyprland, Rofi, Vencord/BetterDiscord, and Kitty.
