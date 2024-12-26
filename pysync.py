@@ -2,6 +2,9 @@ import importlib
 import os
 from theme import *
 from colors import *
+home=os.path.expanduser('~')
+folder=home+ "/.config/colours"
+os.chdir(folder)
 print (order)
 theme=int(input("theme number?"))-1
 newcolours=list(colList[theme].values())
