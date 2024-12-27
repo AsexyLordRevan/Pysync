@@ -15,7 +15,7 @@ colList=[
 "green":  "3e8fb0",
 "mauve":  "c4a7e7",
 "blue":   "9ccfd8",
-"white":  "faf4ed"
+"white":  "faf4ee"
 },
 
 #rosepinedawn
@@ -33,25 +33,25 @@ colList=[
 "green":  "286983",
 "mauve":  "907aa9",
 "blue":   "56949f",
-"white":  "faf4ed"
+"white":  "faf4ee"
 },
 
 #catppuccinmachiatto
 {
 "bg1":    "24273a",
-"bg2":    "2a273f",
-"bg3":    "393552",
+"bg2":    "1e2030",
+"bg3":    "181926",
 "txt":    "cad3f5",
-"st1":    "908caa",
-"st2":    "6e6a86",
-"st3":    "56526e",
+"st1":    "939ab7",
+"st2":    "5b6078",
+"st3":    "363a4f",
 "red":    "ed8769",
-"orange": "ea9d34",
-"yellow": "eed87f",
+"orange": "f5a97f",
+"yellow": "eed49f",
 "green":  "a6da95",
-"mauve":  "c4a7e7",
+"mauve":  "c6a0f6",
 "blue":   "8aadf4",
-"white":  "faf4ed"
+"white":  "f4dbd6"
 },
 ]
 order=["Rose Pine Moon", "Rose Pine Dawn", "Catppuccin Machiatto"]
