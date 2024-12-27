@@ -1,8 +1,17 @@
 import importlib
 import os
-from theme import *
-from colors import *
-home=os.path.expanduser('~')
+from json import load
+
+# load data.json
+with open('data.json') as f:
+      data = load(f)
+
+colList = data["color-schemes"]
+order = data["order"]
+software = data["theme"]["software"]
+commands = data["theme"]["commands"]
+home=os.getenv("HOME")
+
 folder=home+ "/.config/colours"
 os.chdir(folder)
 print (order)
