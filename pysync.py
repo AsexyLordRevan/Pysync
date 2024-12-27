@@ -2,12 +2,14 @@ import importlib
 import os
 from json import load
 
+# usage: FMT_SYMLINK.format("file", "folder")
+FMT_SYMLINK = "ln -sf ~/.config/colours/{0} {1}/{0}"
 # load data.json
 with open('data.json') as f:
       data = load(f)
 
 colList = data["color-schemes"]
-order = data["order"]
+order = list(data["color-schemes"].keys())
 software = data["theme"]["software"]
 commands = data["theme"]["commands"]
 home=os.getenv("HOME")
@@ -15,40 +17,52 @@ home=os.getenv("HOME")
 folder=home+ "/.config/colours"
 os.chdir(folder)
 print (order)
-theme=int(input("theme number?"))-1
-newcolours=list(colList[theme].values())
-newnames=list(colList[theme].keys())
+theme=colList[order[int(input("theme number?"))-1]]   
+newcolours=theme.values()
+newnames=theme.keys()
+
 
 #Make file types
 with open("coloursgtk.css", "w") as f:
-	for i in range(len(newcolours)):
-		print("@define-color ", newnames[i]," #", newcolours[i],";", file=f, sep ='')
+        fc = ""
+        for i in range(len(newcolours)):
+                fc += f"@define-color {newnames[i]} #{newcolours[i]};\n"
+
+        f.write(fc)
+
 with open("colours.css", "w") as f:
-	print(":root{", file=f)
-	for i in range(len(newcolours)):
-		print("\t","--", newnames[i],":#", newcolours[i], file=f, sep='')
-	print ("}", file=f)
+        fc = ":root {\n"
+        for i in range(len(newcolours)):
+                fc += f"\t--{newnames[i]}: #{newcolours[i]};\n"
+        
+        fc += "}"
+        f.write(fc)
+
 with open("colours.conf", "w") as f:
+        fc = ""
         for i in range(len(newcolours)):
-                print("$", newnames[i],"=rgb(", newcolours[i],")", file=f, sep='')
+                fc += f"${newnames[i]}=rgb({newcolours[i]})\n"
+        f.write(fc)
+        
 with open("colours.css", "w") as f:
-        print(":root{", file=f)
+        fc = ":root {\n"
         for i in range(len(newcolours)):
-                print("\t","--", newnames[i],":#", newcolours[i], ";", file=f, sep='')
-        print ("}", file=f)
+                fc += f"\t--{newnames[i]}: #{newcolours[i]};\n"
+        fc += "}"
+        f.write(fc)
+
 with open("colours.rasi", "w") as f:
-        print("*{", file=f)
+        fc = "*{\n"
         for i in range(len(newcolours)):
-                print("\t", newnames[i],":  #", newcolours[i],";", file=f, sep='')
-        print ("}", file=f)
+                fc += f"\t{newnames[i]}: #{newcolours[i]};\n"
+        fc += "}"
+        f.write(fc)
 
 #Move files
 for cursoftware in software:
     if cursoftware["format"] != "search&replace":
-        symlink=str("ln -sf ~/.config/colours/" + cursoftware["format"] + " " + cursoftware["location"]+ "/"+cursoftware["format"])
+        symlink = FMT_SYMLINK.format(cursoftware["format"], cursoftware["location"])
         os.system(symlink)
-    
-#The hard part    
     else:
         with open(cursoftware["location"], "r+") as f:
             data = f.read() 
