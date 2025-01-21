@@ -92,7 +92,17 @@ def setcolors(colorscheme):
         lines[0] = "colorscheme='"+colorscheme+"'\n"
     with open("theme.py", "w") as f:
         f.writelines(lines)
-
+#Set theme
+def settheme(curtheme):    
+    subprocess.call("cp ~/.config/colours/themes/"+curtheme+"/theme.py ~/.config/colours/theme.py", shell=True)
+    for i in software:
+        if software in os.listdir(home+"/.config/colours/themes/"+curtheme):
+                subprocess.call("cp -r ~/.config/colours/themes/"+curtheme+"/"+i["name"]+" "+i["location"], shell=True)
+    import theme
+    setcolors(theme.colorscheme)
+    for i in commands:
+        subprocess.call(i, shell=True)
+    setwallpaper(theme.wallpaper)
 #-----Colours-----#
 if args.colours:
     #Rofi
@@ -172,17 +182,21 @@ if args.save:
 if args.theme:
     if args.rofi:
         curtheme=str(subprocess.check_output("ls ~/.config/colours/themes | sed -e 's/\.py$//'| rofi -dmenu -p 'Theme?'", shell=True))[2:-3]
-        subprocess.call("cp ~/.config/colours/themes/"+curtheme+"/theme.py ~/.config/colours/theme.py", shell=True)
-        for i in software:
-            if software in os.listdir(home+"/.config/colours/themes/"+curtheme):
-                subprocess.call("cp -r ~/.config/colours/themes/"+curtheme+"/"+i["name"]+" "+i["location"], shell=True)
-        import theme
-        setcolors(theme.colorscheme)
-        for i in commands:
-            subprocess.call(i, shell=True)
-        setwallpaper(theme.wallpaper)
-
+    else :
+        os.chdir(home+"/.config/colours/themes")
+        directory_content = os.listdir(os.getenv("HOME") + "/.config/colours/themes")
+        files = []
+        for item in directory_content:
+            files.append(item)
+        
+        for index in range(len(files)):
+            print("%s: %s" % (str(index+1), files[index]))
+        
+        curtheme = int(input("Enter the theme number: "))
+        curtheme = files[curtheme-1]
+    settheme(curtheme)
 
 if args.init:
     import theme
     subprocess.call("swaybg -i "+wallpaperdir+theme.wallpaper+" &", shell=True)
+    
