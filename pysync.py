@@ -92,12 +92,13 @@ def setcolors(colorscheme):
         lines[0] = "colorscheme='"+colorscheme+"'\n"
     with open("theme.py", "w") as f:
         f.writelines(lines)
+
 #Set theme
 def settheme(curtheme):    
     subprocess.call("cp ~/.config/colours/themes/"+curtheme+"/theme.py ~/.config/colours/theme.py", shell=True)
     for i in software:
         if software in os.listdir(home+"/.config/colours/themes/"+curtheme):
-                subprocess.call("cp -r ~/.config/colours/themes/"+curtheme+"/"+i["name"]+" "+i["location"], shell=True)
+            subprocess.call("cp -r ~/.config/colours/themes/"+curtheme+"/"+i["name"]+" "+i["location"], shell=True)
     import theme
     setcolors(theme.colorscheme)
     for i in commands:
@@ -153,8 +154,7 @@ if args.load:
 if args.save:
     if args.rofi:
         input=subprocess.check_output("ls ~/.config/colours/themes | sed -e 's/\.py$//'", shell=True)
-        curtheme=str(subprocess.check_output("ls ~/.config/colours/themes | sed -e 's/\.py$//'| rofi -dmenu -p 'Theme?'", shell=True))[2:-3]
-        os.makedirs(home+"/.config/colours/themes/"+themename)
+        themename=str(subprocess.check_output("ls ~/.config/colours/themes | sed -e 's/\.py$//'| rofi -dmenu -p 'Theme?'", shell=True))[2:-3]
         subprocess.call("cp ~/.config/colours/theme.py ~/.config/colours/themes/"+themename+"/theme.py", shell=True)
         for i in software:
             subprocess.call("cp -r "+i["location"]+" ~/.config/colours/themes/"+themename+"/"+i["name"], shell=True)
